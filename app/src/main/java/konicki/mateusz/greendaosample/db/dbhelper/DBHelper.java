@@ -32,7 +32,8 @@ public class DBHelper extends DatabaseOpenHelper implements IDBHelper {
         DaoMaster.createAllTables(daoMaster.getDatabase(), true);
     }
 
-    public DaoSession getSession(){
+    @Override
+    public DaoSession getSession() {
         DaoMaster master = new DaoMaster(this.getWritableDb());
         return master.newSession();
     }

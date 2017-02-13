@@ -6,8 +6,10 @@ import org.greenrobot.greendao.annotation.JoinEntity;
 import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
+
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.query.WhereCondition;
 
 /**
  * Created by Mateusz on 13.02.2017.
@@ -16,6 +18,7 @@ import org.greenrobot.greendao.DaoException;
 public class User {
     @Id(autoincrement = true)
     private Long id;
+    private String username;
 
     @ToMany
     @JoinEntity(
@@ -25,17 +28,22 @@ public class User {
     )
     private List<ToDo> assignedToDos;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 1507654846)
     private transient UserDao myDao;
 
-    @Generated(hash = 1248599927)
-    public User(Long id) {
+    @Generated(hash = 79420138)
+    public User(Long id, String username) {
         this.id = id;
+        this.username = username;
     }
 
     @Generated(hash = 586692638)
@@ -48,6 +56,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
@@ -120,4 +136,6 @@ public class User {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getUserDao() : null;
     }
+
+  
 }

@@ -9,6 +9,7 @@ import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
 import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.Unique;
 
 
 /**
@@ -20,6 +21,7 @@ public class ToDo {
     @Id(autoincrement = true)
     private Long id;
 
+    @Unique
     private String toDo;
 
     @Convert(converter = ToDoTypePropertyConverter.class, columnType = Integer.class)
@@ -47,6 +49,11 @@ public class ToDo {
     @Generated(hash = 588869791)
     public ToDo(Long id, String toDo, ToDoType type) {
         this.id = id;
+        this.toDo = toDo;
+        this.type = type;
+    }
+
+    public ToDo(String toDo, ToDoType type) {
         this.toDo = toDo;
         this.type = type;
     }
@@ -171,11 +178,29 @@ public class ToDo {
         myDao.update(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ToDo toDo1 = (ToDo) o;
+
+        if (toDo != null ? !toDo.equals(toDo1.toDo) : toDo1.toDo != null) return false;
+        return type == toDo1.type;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = toDo != null ? toDo.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        return result;
+    }
+
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1882739160)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getToDoDao() : null;
     }
-
 }
