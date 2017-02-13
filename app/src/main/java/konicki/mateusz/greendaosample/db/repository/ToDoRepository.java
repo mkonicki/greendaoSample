@@ -23,6 +23,11 @@ public class ToDoRepository extends BaseRepository<ToDo, ToDoDao> {
         return idbHelper.getSession().getToDoDao();
     }
 
+    /**
+     * Get all To Do with specified Type
+     * @param type ToDo type
+     * @return entities with specified type
+     */
     public List<ToDo> getToDoWithType(ToDoType type){
         return getDao().queryBuilder()
                 .where(ToDoDao.Properties.Type.eq(type.getId()))
