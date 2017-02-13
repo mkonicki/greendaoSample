@@ -14,3 +14,10 @@ Database consists 4 entities
 - [ToDoUser](https://github.com/mkonicki/greendaoSample/blob/master/app/src/main/java/konicki/mateusz/greendaosample/entites/ToDoUser.java)
 
 In entity Task is used Enum type [TaskType](https://github.com/mkonicki/greendaoSample/blob/master/app/src/main/java/konicki/mateusz/greendaosample/entites/ToDoType.java) which can be used in entity by using type converter [TaskTypeConverter](https://github.com/mkonicki/greendaoSample/blob/master/app/src/main/java/konicki/mateusz/greendaosample/entites/ToDoTypePropertyConverter.java)
+
+
+## Sample database operations in Repository Pattern ##
+Basic CRUD operations are presented in [Base Repository Class] (https://github.com/mkonicki/greendaoSample/blob/master/app/src/main/java/konicki/mateusz/greendaosample/db/repository/BaseRepository.java)
+All operations are tested in [Base Repository test](https://github.com/mkonicki/greendaoSample/blob/master/app/src/test/java/konicki/mateusz/greendaosample/BaseRepositoryTest.java)
+Operations on ToDo entity are presented in [ToDoRepository](https://github.com/mkonicki/greendaoSample/blob/master/app/src/main/java/konicki/mateusz/greendaosample/db/repository/ToDoRepository.java)
+and tested in [ToDoTest](https://github.com/mkonicki/greendaoSample/blob/master/app/src/test/java/konicki/mateusz/greendaosample/ToDoRepositoryTest.java)
