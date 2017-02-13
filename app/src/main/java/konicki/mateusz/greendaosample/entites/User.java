@@ -2,7 +2,10 @@ package konicki.mateusz.greendaosample.entites;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.ToOne;
+import org.greenrobot.greendao.annotation.JoinEntity;
+import org.greenrobot.greendao.annotation.ToMany;
+
+import java.util.List;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 
@@ -10,38 +13,33 @@ import org.greenrobot.greendao.DaoException;
  * Created by Mateusz on 13.02.2017.
  */
 @Entity
-public class Task {
+public class User {
     @Id(autoincrement = true)
     private Long id;
 
-    private Long toDoId;
-
-    @ToOne(joinProperty = "toDoId")
-    private ToDo toDo;
-
-    private String taskDescription;
-
-    private int timeRequiredToPerform;
+    @ToMany
+    @JoinEntity(
+            entity = ToDoUser.class,
+            sourceProperty = "userId",
+            targetProperty = "toDoId"
+    )
+    private List<ToDo> assignedToDos;
 
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
 
     /** Used for active entity operations. */
-    @Generated(hash = 1469429066)
-    private transient TaskDao myDao;
+    @Generated(hash = 1507654846)
+    private transient UserDao myDao;
 
-    @Generated(hash = 2091761366)
-    public Task(Long id, Long toDoId, String taskDescription,
-            int timeRequiredToPerform) {
+    @Generated(hash = 1248599927)
+    public User(Long id) {
         this.id = id;
-        this.toDoId = toDoId;
-        this.taskDescription = taskDescription;
-        this.timeRequiredToPerform = timeRequiredToPerform;
     }
 
-    @Generated(hash = 733837707)
-    public Task() {
+    @Generated(hash = 586692638)
+    public User() {
     }
 
     public Long getId() {
@@ -52,60 +50,32 @@ public class Task {
         this.id = id;
     }
 
-    public Long getToDoId() {
-        return this.toDoId;
-    }
-
-    public void setToDoId(Long toDoId) {
-        this.toDoId = toDoId;
-    }
-
-    public String getTaskDescription() {
-        return this.taskDescription;
-    }
-
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
-    }
-
-    public int getTimeRequiredToPerform() {
-        return this.timeRequiredToPerform;
-    }
-
-    public void setTimeRequiredToPerform(int timeRequiredToPerform) {
-        this.timeRequiredToPerform = timeRequiredToPerform;
-    }
-
-    @Generated(hash = 260954488)
-    private transient Long toDo__resolvedKey;
-
-    /** To-one relationship, resolved on first access. */
-    @Generated(hash = 1875790115)
-    public ToDo getToDo() {
-        Long __key = this.toDoId;
-        if (toDo__resolvedKey == null || !toDo__resolvedKey.equals(__key)) {
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1933238000)
+    public List<ToDo> getAssignedToDos() {
+        if (assignedToDos == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
             ToDoDao targetDao = daoSession.getToDoDao();
-            ToDo toDoNew = targetDao.load(__key);
+            List<ToDo> assignedToDosNew = targetDao._queryUser_AssignedToDos(id);
             synchronized (this) {
-                toDo = toDoNew;
-                toDo__resolvedKey = __key;
+                if (assignedToDos == null) {
+                    assignedToDos = assignedToDosNew;
+                }
             }
         }
-        return toDo;
+        return assignedToDos;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 671486003)
-    public void setToDo(ToDo toDo) {
-        synchronized (this) {
-            this.toDo = toDo;
-            toDoId = toDo == null ? null : toDo.getId();
-            toDo__resolvedKey = toDoId;
-        }
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1679940556)
+    public synchronized void resetAssignedToDos() {
+        assignedToDos = null;
     }
 
     /**
@@ -145,11 +115,9 @@ public class Task {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1442741304)
+    @Generated(hash = 2059241980)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getTaskDao() : null;
+        myDao = daoSession != null ? daoSession.getUserDao() : null;
     }
-
-   
 }
