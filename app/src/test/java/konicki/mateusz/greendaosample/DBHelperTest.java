@@ -11,7 +11,8 @@ import org.robolectric.annotation.Config;
 
 import java.util.List;
 
-import konicki.mateusz.greendaosample.entites.Task;
+import konicki.mateusz.greendaosample.db.dbhelper.DBHelper;
+import konicki.mateusz.greendaosample.entites.ToDo;
 import konicki.mateusz.greendaosample.entites.TaskDao;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,17 +43,17 @@ public class DBHelperTest {
 
         assertThat(taskDao).isNotNull();
         //WHEN
-        Task task = new Task("Cook chicken");
+        ToDo toDo = new ToDo("Cook chicken");
 
-        Long id = taskDao.insert(task);
+        Long id = taskDao.insert(toDo);
 
         assertThat(id).isNotNull();
 
 
         //THEN
-        List<Task> tasks = taskDao.loadAll();
+        List<ToDo> toDos = taskDao.loadAll();
 
-        assertThat(tasks).containsExactly(task);
+        assertThat(toDos).containsExactly(toDo);
     }
 
 }
